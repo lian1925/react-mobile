@@ -1,0 +1,15 @@
+.menu-container {
+  /* height: 100vh; */
+  background: #001528;
+}
+.menu-container .icon-container {
+  height: 88px;
+  text-align: center;
+  line-height: 88px;
+}
+.menu-container .icon-container img {
+  width: 45px;
+  height: 45px;
+  border: 1px solid green;
+  display: inline-block;
+}
