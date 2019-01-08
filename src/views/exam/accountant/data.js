@@ -13,6 +13,7 @@ import {
   Pagination,
   Popover
 } from "antd";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { log } from "util/log";
 import { stringtomore, numbertostring } from "util/tool";
@@ -88,6 +89,16 @@ const columns = [
     dataIndex: "material",
     key: "material",
     className: "table-collumn w-20"
+  },
+  {
+    title: "操作",
+    key: "action",
+    width: "120px",
+    render: (text, record) => (
+      <span>
+        <Link to={`/accountant-exam/edit?${record.id}`}>编辑</Link>
+      </span>
+    )
   }
 ];
 const etymaWord = text => (

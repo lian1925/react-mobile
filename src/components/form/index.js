@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 
 import { log } from "util/log";
 import "./index.less";
+import TextArea from "antd/lib/input/TextArea";
 
 class index extends Component {
   componentDidMount() {
@@ -16,7 +17,6 @@ class index extends Component {
     }
   }
   initValues = () => {
-    log(31, this.props.array.values);
     this.props.form.setFieldsValue(this.props.array.values);
   };
   handleSearch = e => {
@@ -45,9 +45,10 @@ class index extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 12 }
+        sm: { span: 21 }
       }
     };
+    console.log(111, array);
     const formItemArray = (
       <div>
         {(array.itemArray || []).map((item, k) => (
@@ -63,7 +64,13 @@ class index extends Component {
                   message: item.message
                 }
               ]
-            })(<Input placeholder={item.placeholder} />)}
+            })(
+              item.type === "textarea" ? (
+                <TextArea placeholder={item.placeholder} rows="10" />
+              ) : (
+                <Input placeholder={item.placeholder} />
+              )
+            )}
           </Form.Item>
         ))}
       </div>

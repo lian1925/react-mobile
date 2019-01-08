@@ -5,6 +5,14 @@ import { log } from "util/log";
 import "./index.less";
 
 class index extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.array.values !== prevProps.array.values) {
+      this.initValues();
+    }
+  }
+  initValues = () => {
+    this.props.form.setFieldsValue(this.props.array.values);
+  };
   handleSearch = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {

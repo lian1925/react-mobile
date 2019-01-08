@@ -24,6 +24,7 @@ import { stringtomore, numbertostring } from "util/tool";
 
 import { filters, columns } from "./data";
 
+const routePath = "/api/simple/word";
 class index extends Component {
   state = {
     searchButtonLoading: false,
@@ -33,6 +34,22 @@ class index extends Component {
   };
 
   componentDidMount() {
+    this.init();
+  }
+
+  init = () => {
+    let pathname = this.props.location.pathname;
+    let pathnameList = pathname.split("/");
+    let type = pathnameList[pathnameList.length - 1];
+
+    let query = this.props.location.search;
+    query = query.split("?");
+    let queryString = query[1];
+    this.state.simpleId = simpleId;
+    this.state.type = type;
+
+    log(33, simpleId, type);
+
     const pagination = {
       current: this.props.redux.pagination.current,
       pageSize: this.props.redux.pagination.pageSize,
@@ -45,8 +62,7 @@ class index extends Component {
     this.state.pagination = pagination;
     this.state.filterResult = filterResult;
     this.updateTable();
-    log(21, pagination, filterResult);
-  }
+  };
   onPaginationSizeChange = (current, size) => {
     let { pagination, filterResult } = this.state;
     pagination.pageSize = size;
@@ -81,7 +97,7 @@ class index extends Component {
     this.updateTable();
   };
   updateTable = () => {
-    const { pagination, filterResult } = this.state;
+    const { pagination, filterResult, simpleId, type } = this.state;
     log(1, pagination, filterResult);
     if (!this.Interceptor()) {
       return;
@@ -96,7 +112,7 @@ class index extends Component {
     };
     // params = Object.assign({}, params, values);
     log(params);
-    get("/api/simple/word", params)
+    get(routePath, params)
       .then(res => {
         log(2, res.data);
         pagination.total = res.data.count;
@@ -105,6 +121,9 @@ class index extends Component {
             // key: "0" + (index + 1),
             // id: numbertostring(index + 1),
             id: (pagination.current - 1) * pagination.pageSize + index + 1,
+            collection_id: simpleId,
+            collection_word_id: item.id,
+            type,
             ...item
           };
           return temp;
@@ -132,6 +151,10 @@ class index extends Component {
   createItem = () => {
     this.props.history.push("/simple-english/create");
   };
+
+  goToLast = () => {
+    this.props.history.go(-1);
+  };
   render() {
     const {
       searchButtonLoading,
@@ -148,6 +171,11 @@ class index extends Component {
           filterResult={this.filterResult}
           createItem={this.createItem}
         />
+        <div className="header">
+          <Button type="primary" onClick={this.goToLast} className="btn-back">
+            返回
+          </Button>
+        </div>
         <Table data={tableData} />
       </div>
     );

@@ -6,6 +6,8 @@ import Form from "co/form";
 import { log } from "util/log";
 import { get, post, put } from "util/fetch";
 import { message } from "antd";
+
+const routePath = "/api/exam_boot/accountant/";
 export default class index extends Component {
   state = {
     minHeight: window.innerHeight - 115,
@@ -36,11 +38,12 @@ export default class index extends Component {
     }
   };
   getWordInfo = simpleId => {
-    const url = `/api/simple/word/${simpleId}`;
+    const url = `${routePath}${simpleId}`;
+    log(12, url);
     get(url)
       .then(res => {
         let data = res.data.data[0] === undefined ? {} : res.data.data[0];
-        log(21, url, data);
+        log(12, url, data);
 
         this.setState({
           data
@@ -74,7 +77,7 @@ export default class index extends Component {
     this.setState({
       confirmButtonLoading: true
     });
-    put(`/api/simple/word/${simpleId}`, values)
+    put(`${routePath}${simpleId}`, values)
       .then(res => {
         log(33, res.data);
         message.success("更改成功");
@@ -93,7 +96,7 @@ export default class index extends Component {
     this.setState({
       confirmButtonLoading: true
     });
-    post(`/api/simple/word`, values)
+    post(`${routePath}`, values)
       .then(res => {
         log(24, res.data);
         this.props.history.go(-1);
@@ -117,7 +120,7 @@ export default class index extends Component {
       <div className="simple-edit-container" style={{ minHeight }}>
         <div className="title">
           <div className="icon" />
-          单词编辑
+          试题编辑
         </div>
 
         <Form array={array} filterResult={this.filterResult} />

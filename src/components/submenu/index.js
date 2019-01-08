@@ -15,7 +15,7 @@ export default class index extends Component {
     const menu = (
       <div>
         <Menu
-          defaultSelectedKeys={[`基本单词-0`]}
+          defaultSelectedKeys={[]}
           defaultOpenKeys={[`英语`]}
           mode="inline"
           theme="dark"

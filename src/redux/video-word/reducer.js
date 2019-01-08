@@ -6,9 +6,9 @@ const initial = {
   filterResult: {}
 };
 
-export const simpleWord = (state = initial, action) => {
+export const videoWord = (state = initial, action) => {
   switch (action.type) {
-    case "SET_SIMPLE_WORD":
+    case "SET_VIDEO_WORD":
       let res = Object.assign({}, state, action.value);
       console.log(123, res);
       return res;

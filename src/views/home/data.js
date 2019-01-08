@@ -1,16 +1,26 @@
 import about from "@/views/about";
-import English from "@/views/english/video";
+
 import simple from "@/views/english/simple";
 import simpleEdit from "@/views/english/simple-edit";
 import simpleDetail from "@/views/english/simple-detail";
 
+import video from "@/views/english/video";
+import videoEdit from "@/views/english/video-edit";
+import videoDetail from "@/views/english/video-detail";
+
+import collection from "@/views/english/collection";
+import collectionEdit from "@/views/english/collection-edit";
+import collectionChoose from "@/views/english/collection-choose";
+
 import accountant from "@/views/exam/accountant";
-import ant from "@/views/ant/table";
+import accountantEdit from "@/views/exam/accountant-edit";
 
 export const bread = {
   edit: { title: "编辑" },
   detail: { title: "详情" },
-  create: { title: "新增" }
+  create: { title: "新增" },
+  choose: { title: "添加" },
+  replace: { title: "替换" }
 };
 
 export const routes = [
@@ -54,13 +64,73 @@ export const routes = [
     path: "/video-english",
     exact: true,
     title: "视频单词",
-    page: English
+    page: video
+  },
+  {
+    path: "/video-english/edit",
+    exact: true,
+    title: "编辑",
+    page: videoEdit
+  },
+  {
+    path: "/video-english/create",
+    exact: true,
+    title: "新增",
+    page: videoEdit
+  },
+  {
+    path: "/video-english/detail",
+    exact: true,
+    title: "详情",
+    page: videoDetail
+  },
+  {
+    path: "/collection-english",
+    exact: true,
+    title: "词库",
+    page: collection
+  },
+  {
+    path: "/collection-english/edit",
+    exact: true,
+    title: "编辑",
+    page: collectionEdit
+  },
+  {
+    path: "/collection-english/create",
+    exact: true,
+    title: "新增",
+    page: collectionEdit
+  },
+  {
+    path: "/collection-english/choose",
+    exact: true,
+    title: "添加",
+    page: collectionChoose
+  },
+  {
+    path: "/collection-english/replace",
+    exact: true,
+    title: "更换",
+    page: collectionChoose
   },
   {
     path: "/accountant-exam",
     exact: true,
     title: "会计",
     page: accountant
+  },
+  {
+    path: "/accountant-exam/edit",
+    exact: true,
+    title: "编辑",
+    page: accountantEdit
+  },
+  {
+    path: "/accountant-exam/create",
+    exact: true,
+    title: "新增",
+    page: accountantEdit
   }
 ];
 
@@ -79,6 +149,11 @@ export const menu_obj = [
         title: "视频单词",
         route: "/video-english",
         key: 3
+      },
+      {
+        title: "词库",
+        route: "/collection-english",
+        key: 4
       }
     ]
   },

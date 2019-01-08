@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { setValue } from "@/redux/video-word";
+import { connect } from "react-redux";
 import {
   Form,
   Row,
@@ -23,8 +25,7 @@ import { log } from "util/log";
 import { stringtomore, numbertostring } from "util/tool";
 
 import { filters, columns } from "./data";
-
-export default class index extends Component {
+class index extends Component {
   state = {
     searchButtonLoading: false,
     source: [],
@@ -34,19 +35,15 @@ export default class index extends Component {
 
   componentDidMount() {
     const pagination = {
-      current: 1,
-      pageSize: 10,
+      current: this.props.redux.pagination.current,
+      pageSize: this.props.redux.pagination.pageSize,
       showSizeChanger: true,
       onShowSizeChange: this.onPaginationSizeChange,
       onChange: this.onPaginationChange,
       showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
     };
+    const { filterResult } = this.props.redux;
     this.state.pagination = pagination;
-    const filterResult = {
-      word: "",
-      exampleSat: "",
-      chineseInterpretation: ""
-    };
     this.state.filterResult = filterResult;
     this.updateTable();
   }
@@ -54,12 +51,14 @@ export default class index extends Component {
     let { pagination, filterResult } = this.state;
     pagination.pageSize = size;
     this.state.pagination = pagination;
+    this.props.setValue({ pagination });
     this.updateTable();
   };
   onPaginationChange = (page, pageSize) => {
     let { pagination, filterResult } = this.state;
     pagination = { ...pagination, current: page, pageSize };
     this.state.pagination = pagination;
+    this.props.setValue({ pagination });
 
     this.updateTable();
   };
@@ -76,6 +75,7 @@ export default class index extends Component {
     log(filterResult);
     this.state.filterResult = filterResult;
     this.state.pagination = pagination;
+    this.props.setValue({ pagination, filterResult });
     this.updateTable();
   };
   updateTable = () => {
@@ -94,14 +94,16 @@ export default class index extends Component {
     };
     // params = Object.assign({}, params, values);
     log(params);
+
     get("/api/english/word", params)
       .then(res => {
         log(2, res.data);
         pagination.total = res.data.count;
         const source = (res.data.data || []).map((item, index) => {
           const temp = {
-            key: "0" + (index + 1),
-            id: numbertostring(index + 1),
+            // key: "0" + (index + 1),
+            // id: numbertostring(index + 1),
+            id: (pagination.current - 1) * pagination.pageSize + index + 1,
             ...item
           };
           return temp;
@@ -125,15 +127,44 @@ export default class index extends Component {
   Interceptor = () => {
     return true;
   };
+
+  createItem = () => {
+    this.props.history.push("/video-english/create");
+  };
   render() {
-    const { searchButtonLoading, source, pagination } = this.state;
-    const array = { filters, searchButtonLoading };
+    const {
+      searchButtonLoading,
+      source,
+      pagination,
+      filterResult
+    } = this.state;
+    const array = { filters, searchButtonLoading, values: filterResult };
     const tableData = { columns, source, pagination };
     return (
       <div>
-        <Filter array={array} filterResult={this.filterResult} />
+        <Filter
+          array={array}
+          filterResult={this.filterResult}
+          createItem={this.createItem}
+        />
         <Table data={tableData} />
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  redux: state.videoWord
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    setValue: value => {
+      dispatch(setValue(value));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(index);

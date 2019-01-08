@@ -51,51 +51,51 @@ const columns = [
     dataIndex: "word",
     key: "word"
   },
-  // {
-  //   title: "注释",
-  //   dataIndex: "definition",
-  //   key: "definition",
-  //   render: (text, record, index) => {
-  //     return (
-  //       <Popover content={etymaWord(text)} title="Title">
-  //         <span className="stringtomore-collumn">{stringtomore(text)}</span>
-  //       </Popover>
-  //     );
-  //   }
-  // },
-  // {
-  //   title: "音标",
-  //   key: "phoneticSymbol",
-  //   dataIndex: "phoneticSymbol",
-  //   render: (text, record, index) => {
-  //     return <span>{`[${text}]`}</span>;
-  //   }
-  // },
-  // {
-  //   title: "音标发音",
-  //   key: "pronunciationURL",
-  //   dataIndex: "pronunciationURL",
-  //   render: (text, record, index) => {
-  //     return (
-  //       <Popover content={soundHover(text)} title="详情" trigger="click">
-  //         <span>{stringtomore(text, 8)}</span>
-  //       </Popover>
-  //     );
-  //   }
-  // },
-  // {
-  //   title: "图标",
-  //   key: "profilePictureURL",
-  //   dataIndex: "profilePictureURL",
-  //   render: (text, record, index) => {
-  //     return (
-  //       <Popover content={text} title={record.word} placement="right">
-  //         {/* <span className="stringtomore-collumn">{stringtomore(text)}</span> */}
-  //         {imageHover(text)}
-  //       </Popover>
-  //     );
-  //   }
-  // },
+  {
+    title: "注释",
+    dataIndex: "definition",
+    key: "definition",
+    render: (text, record, index) => {
+      return (
+        <Popover content={etymaWord(text)} title="Title">
+          <span className="stringtomore-collumn">{stringtomore(text)}</span>
+        </Popover>
+      );
+    }
+  },
+  {
+    title: "音标",
+    key: "phoneticSymbol",
+    dataIndex: "phoneticSymbol",
+    render: (text, record, index) => {
+      return <span>{`[${text}]`}</span>;
+    }
+  },
+  {
+    title: "音标发音",
+    key: "pronunciationURL",
+    dataIndex: "pronunciationURL",
+    render: (text, record, index) => {
+      return (
+        <Popover content={soundHover(text)} title="详情" trigger="click">
+          <span>{stringtomore(text, 8)}</span>
+        </Popover>
+      );
+    }
+  },
+  {
+    title: "图标",
+    key: "profilePictureURL",
+    dataIndex: "profilePictureURL",
+    render: (text, record, index) => {
+      return (
+        <Popover content={text} title={record.word} placement="right">
+          {/* <span className="stringtomore-collumn">{stringtomore(text)}</span> */}
+          {imageHover(text)}
+        </Popover>
+      );
+    }
+  },
   {
     title: "例句",
     key: "sampleSentence",

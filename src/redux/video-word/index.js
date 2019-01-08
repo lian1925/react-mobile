@@ -1,4 +1,4 @@
 export const setValue = value => ({
-  type: "SET_SIMPLE_WORD",
+  type: "SET_VIDEO_WORD",
   value
 });

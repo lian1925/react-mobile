@@ -96,7 +96,7 @@ class index extends Component {
     };
     // params = Object.assign({}, params, values);
     log(params);
-    get("/api/simple/word", params)
+    get("/api/english/collection", params)
       .then(res => {
         log(2, res.data);
         pagination.total = res.data.count;
@@ -105,6 +105,7 @@ class index extends Component {
             // key: "0" + (index + 1),
             // id: numbertostring(index + 1),
             id: (pagination.current - 1) * pagination.pageSize + index + 1,
+            collection_id: item.id,
             ...item
           };
           return temp;
@@ -130,7 +131,7 @@ class index extends Component {
   };
 
   createItem = () => {
-    this.props.history.push("/simple-english/create");
+    this.props.history.push("/collection-english/create");
   };
   render() {
     const {

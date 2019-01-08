@@ -13,35 +13,30 @@ import {
   Pagination,
   Popover
 } from "antd";
-
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { log } from "util/log";
 import { stringtomore, numbertostring } from "util/tool";
-const filters = [
+
+export const itemArray = [
   {
-    label: "单词",
-    name: "word",
-    required: false,
-    message: "请输入单词",
+    label: "词库名",
+    name: "name",
+    value: "name",
+    required: true,
+    message: "请输入词库名",
     placeholder: ""
   },
   {
-    label: "句子",
-    name: "exampleSat",
+    label: "备注",
+    name: "note",
     required: false,
-    message: "请输入单词",
-    placeholder: ""
-  },
-  {
-    label: "注释",
-    name: "chineseInterpretation",
-    required: false,
-    message: "请输入单词",
+    message: "请输入备注",
     placeholder: ""
   }
 ];
-const columns = [
+
+export const columns = [
   {
     title: "序号",
     dataIndex: "id",
@@ -53,17 +48,9 @@ const columns = [
     key: "word"
   },
   {
-    title: "视频",
-    dataIndex: "aliVideoUrl",
-    key: "aliVideoUrl",
-    render: (text, record, index) => {
-      return <Tooltip title={text}>{videoHover(text)}</Tooltip>;
-    }
-  },
-  {
     title: "注释",
-    dataIndex: "chineseInterpretation",
-    key: "chineseInterpretation",
+    dataIndex: "definition",
+    key: "definition",
     render: (text, record, index) => {
       return (
         <Popover content={etymaWord(text)} title="Title">
@@ -73,21 +60,31 @@ const columns = [
     }
   },
   {
-    title: "句子",
-    key: "exampleSat",
-    dataIndex: "exampleSat",
+    title: "音标",
+    key: "phoneticSymbol",
+    dataIndex: "phoneticSymbol",
+    render: (text, record, index) => {
+      return <span>{`[${text}]`}</span>;
+    }
+  },
+
+  {
+    title: "图标",
+    key: "profilePictureURL",
+    dataIndex: "profilePictureURL",
     render: (text, record, index) => {
       return (
-        <Popover content={etymaWord(text)} title="详情">
-          <span className="stringtomore-collumn">{stringtomore(text)}</span>
+        <Popover content={text} title={record.word} placement="right">
+          {/* <span className="stringtomore-collumn">{stringtomore(text)}</span> */}
+          {imageHover(text)}
         </Popover>
       );
     }
   },
   {
-    title: "词根",
-    key: "etymaWord",
-    dataIndex: "etymaWord",
+    title: "例句",
+    key: "sampleSentence",
+    dataIndex: "sampleSentence",
     render: (text, record, index) => {
       return (
         <Popover content={etymaWord(text)} title="详情">
@@ -96,27 +93,20 @@ const columns = [
       );
     }
   },
-  {
-    title: "词组",
-    key: "wordGroup",
-    dataIndex: "wordGroup",
-    render: (text, record, index) => {
-      return (
-        <Popover content={etymaWord(text)} title="详情">
-          <span className="stringtomore-collumn">{stringtomore(text)}</span>
-        </Popover>
-      );
-    }
-  },
+
   {
     title: "操作",
     key: "action",
     width: "120px",
     render: (text, record) => (
       <span>
-        <Link to={`/video-english/detail?${record.word_id}`}>详情</Link>
-        <Divider type="vertical" />
-        <Link to={`/video-english/edit?${record.word_id}`}>编辑</Link>
+        <Link
+          to={`/collection-english/replace?collection_id=${
+            record.collection_id
+          }&collection_word_id=${record.collection_word_id}`}
+        >
+          更换
+        </Link>
       </span>
     )
   }
@@ -128,8 +118,14 @@ const etymaWord = text => (
     })}
   </div>
 );
-
-const videoHover = text => (
-  <video width="250" height="auto" src={text} controls />
+const imageHost = "https://jiguangdanci.easylesson.cn";
+const imageHover = text => (
+  <div>
+    <img className="image-hover" src={imageHost + text} alt="" />
+  </div>
 );
-export { filters, columns };
+const soundHover = text => (
+  <div>
+    <audio controls autoPlay className="audio" src={imageHost + text} />
+  </div>
+);

@@ -36,7 +36,8 @@ export default class index extends Component {
     }
   };
   getWordInfo = simpleId => {
-    const url = `/api/simple/word/${simpleId}`;
+    const url = `/api/english/word/${simpleId}`;
+    log(111, url);
     get(url)
       .then(res => {
         let data = res.data.data[0] === undefined ? {} : res.data.data[0];
@@ -74,7 +75,7 @@ export default class index extends Component {
     this.setState({
       confirmButtonLoading: true
     });
-    put(`/api/simple/word/${simpleId}`, values)
+    put(`/api/english/word/${simpleId}`, values)
       .then(res => {
         log(33, res.data);
         message.success("更改成功");
@@ -93,7 +94,7 @@ export default class index extends Component {
     this.setState({
       confirmButtonLoading: true
     });
-    post(`/api/simple/word`, values)
+    post(`/api/english/word`, values)
       .then(res => {
         log(24, res.data);
         this.props.history.go(-1);

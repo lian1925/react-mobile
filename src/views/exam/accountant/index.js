@@ -125,13 +125,21 @@ export default class index extends Component {
   Interceptor = () => {
     return true;
   };
+
+  createItem = () => {
+    this.props.history.push("/accountant-exam/create");
+  };
   render() {
     const { searchButtonLoading, source, pagination } = this.state;
     const array = { filters, searchButtonLoading };
     const tableData = { columns, source, pagination };
     return (
       <div>
-        <Filter array={array} filterResult={this.filterResult} />
+        <Filter
+          array={array}
+          filterResult={this.filterResult}
+          createItem={this.createItem}
+        />
         <Table data={tableData} />
       </div>
     );
